@@ -11,14 +11,14 @@ services:
     container_name: rabbitmq_receive
     hostname: rabbitmq2
     image: anton1987/rabbitmq_hello_world_receive
+    volumes:
+      - /Users/anton/RubymineProjects/Rails/mkdev/rabbit:/Users/anton/RubymineProjects/Rails/mkdev/rabbit
     depends_on:
       - rabbitmq
   send:
     container_name: rabbitmq_send
     hostname: rabbitmq3
     image: anton1987/rabbitmq_hello_world_send
-    volumes:
-      - /Users/anton/RubymineProjects/Rails/mkdev/rabbit:/Users/anton/RubymineProjects/Rails/mkdev/rabbit
     depends_on:
           - rabbitmq
           - receive
