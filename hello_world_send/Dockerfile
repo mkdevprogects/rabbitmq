@@ -1,5 +1,3 @@
-FROM ruby:2.4
-COPY Gemfile /
+FROM anton1987/my_bunny
 COPY send.rb /
-RUN bundle install
 CMD ruby send.rb
