@@ -1,10 +1,10 @@
-# отправитель
+# producer
 
 require 'bunny'
 
 
-def send(message, n)
-  message = "#{message} #{n}"
+def bunny_send(n)
+  message = "I sent message: #{n}"
 
   conn = Bunny.new(hostname: 'rabbitmq')
   conn.start
@@ -20,13 +20,12 @@ def send(message, n)
 end
 
 def start
-  message = 'I sent message: '
-  10.times { |n| send(message, n+1); sleep 2 }
+  begin
+    10.times { |n| bunny_send(n+1); sleep 2 }
+  rescue Bunny::TCPConnectionFailedForAllHosts => e
+    sleep 2
+    start
+  end
 end
 
-
-begin
-  start
-rescue Bunny::TCPConnectionFailedForAllHosts => e
-  start
-end
+start
