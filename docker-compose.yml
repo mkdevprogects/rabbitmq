@@ -1,0 +1,22 @@
+version: '3'
+services:
+  rabbitmq:
+    container_name: rabbitmq
+    hostname: rabbitmq-container
+    image: rabbitmq:3.6.2-management
+    ports:
+      - "127.0.0.1:15672:15672"
+      - "127.0.0.1:5672:5672"
+  receive:
+    container_name: rabbitmq_receive
+    hostname: rabbitmq2
+    image: anton1987/rabbitmq_hello_world_receive
+    depends_on:
+      - rabbitmq
+  send:
+    container_name: rabbitmq_send
+    hostname: rabbitmq3
+    image: anton1987/rabbitmq_hello_world_send
+    depends_on:
+          - rabbitmq
+          - receive
