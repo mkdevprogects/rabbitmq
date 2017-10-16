@@ -4,7 +4,7 @@ require 'bunny'
 
 def receive
 	begin
-		conn = Bunny.new(:automatically_recover => false, hostname: 'rabbitmq')
+		conn = Bunny.new(:automatically_recover => false, hostname: ENV['RABBITMQ_HOSTNAME'])
 		conn.start
 
 		ch   = conn.create_channel
@@ -14,7 +14,7 @@ def receive
 		puts " [*] Waiting for messages. To exit press CTRL+C"
 		q.subscribe(:block => true) do |delivery_info, properties, body|
 			puts " [x] Received #{body}"
-      File.open('/Users/anton/RubymineProjects/Rails/mkdev/rabbit/logs_rabbitmq.log', 'a') { |f| f.puts("[x]:#{body}\n") }
+      File.open('/mkdev/rabbit/logs_rabbitmq.log', 'a') { |f| f.puts("[x]:#{body}\n") }
 		end
 	  
 	rescue Bunny::TCPConnectionFailedForAllHosts => e

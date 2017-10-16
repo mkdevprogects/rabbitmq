@@ -6,7 +6,7 @@ require 'bunny'
 def bunny_send(n)
   message = "I sent message: #{n}"
 
-  conn = Bunny.new(hostname: 'rabbitmq')
+  conn = Bunny.new(hostname: ENV['RABBITMQ_HOSTNAME'])
   conn.start
 
   ch = conn.create_channel
